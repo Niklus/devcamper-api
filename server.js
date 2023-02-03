@@ -5,6 +5,8 @@ const app = express();
 if (process.env.NODE_ENV === 'development') {
   require('dotenv').config();
   app.use(morgan('dev'));
+} else {
+  app.use(morgan('combined'));
 }
 
 const PORT = process.env.PORT || 3000;
