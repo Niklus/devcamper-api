@@ -1,17 +1,13 @@
 const express = require('express');
-const dotenv = require('dotenv');
 const morgan = require('morgan');
-
-// Load env variables
-dotenv.config({});
-
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Logger
 if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
   app.use(morgan('dev'));
 }
+
+const PORT = process.env.PORT || 3000;
 
 app.use('/api/v1/bootcamps', require('./routes/bootcamps'));
 
