@@ -5,23 +5,24 @@ const connectDB = require('./config/db');
 
 const app = express();
 
-if (process.env.NODE_ENV === 'development') {
+const { NODE_ENV } = process.env;
+
+if (NODE_ENV === 'development') {
   require('dotenv').config();
   app.use(morgan('dev'));
 } else {
   app.use(morgan('combined'));
 }
 
-const PORT = process.env.PORT || 3000;
+const { PORT, MONGO_URI } = process.env;
 
 // Connect to database
-connectDB();
+connectDB(MONGO_URI);
 
 app.use('/api/v1/bootcamps', require('./routes/bootcamps'));
 
 app.listen(PORT, () => {
   console.log(
-    `Server running in ${process.env.NODE_ENV} mode on port: ${PORT}`.yellow
-      .bold
+    `Server running in ${NODE_ENV} mode on port: ${PORT}`.yellow.bold
   );
 });
